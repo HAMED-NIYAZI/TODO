@@ -1,6 +1,6 @@
 using Application.Common;
 using Domain.ViewModel.User;
-using LawyerCoreApp.Application.Services.Interfaces;
+using Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
