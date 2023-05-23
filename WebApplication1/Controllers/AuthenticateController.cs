@@ -71,10 +71,11 @@ namespace Api.Controllers
         [HttpPost("newtoken")]
         public async Task<IActionResult> PostNewToken(string refreshToken)
         {
-            var refreshTokenTimeOut = _configuration.GetValue<int>("RefreshTokenTimeOut");
+            if(refreshToken.Length!=36 || refreshToken == null) return BadRequest("invalid refresh token format");
 
+            var refreshTokenTimeOut = _configuration.GetValue<int>("RefreshTokenTimeOut");
             var userRefreshToken = await _userService.GetRefreshTokenAsync(refreshToken);
-            if (refreshToken == null) return BadRequest("invalid request");
+            if (userRefreshToken== null || userRefreshToken.RefreshToken==null) return BadRequest("invalid refresh token");
             if (userRefreshToken.RefreshToken != Guid.Parse(refreshToken.ToString())) return BadRequest("invalid refresh token");
             if (!userRefreshToken.IsValid) return BadRequest("is invalid refresh token");
             if (userRefreshToken.CreateDate.AddMinutes(refreshTokenTimeOut) < DateTime.Now) return BadRequest("expire refresh token");
