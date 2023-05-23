@@ -1,4 +1,5 @@
-﻿using Domain.Models.User;
+﻿using Domain.Model.Todo;
+using Domain.Models.User;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
@@ -22,8 +23,11 @@ public class TodoContext : DbContext
        public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
     #endregion
 
-  
- 
+    #region Todo
+    public DbSet<Todo> Todos { get; set; }
+     #endregion
+
+
 
     #region OnModelCreating
     protected override void OnModelCreating(ModelBuilder modelBuilder)

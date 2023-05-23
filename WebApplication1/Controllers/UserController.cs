@@ -20,8 +20,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [SwaggerOperation(Summary = "Write your summary here")]
-        public async Task<IActionResult> Add(CreateUserViewModel model)
+         public async Task<IActionResult> Add(CreateUserViewModel model)
         {
             //check validation
              var hashPassword = _encryptionUtility.HashSHA256(model.Password);

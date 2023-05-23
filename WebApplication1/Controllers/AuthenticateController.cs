@@ -29,10 +29,10 @@ namespace Api.Controllers
         {
             //1-check username & password
             var user = await _userService.GetAsync(model.UserName);
-            if (user == null) return BadRequest("invalid userName");
+            if (user == null) return BadRequest("Invalid UserName Or Password ");
 
             var hashPassword = _encryptionUtility.HashSHA256(model.Password);
-            if (user.Password != hashPassword) return BadRequest("invalid password");
+            if (user.Password != hashPassword) return BadRequest("Invalid UserName Or Password ");
 
             var token = GenerateNewToken(user.Id);
             var refreshToken = Guid.NewGuid();
@@ -70,13 +70,28 @@ namespace Api.Controllers
 
         [HttpPost("newtoken")]
         public async Task<IActionResult> PostNewToken(string refreshToken)
-        {
+        {/*
             if(refreshToken.Length!=36 || refreshToken == null) return BadRequest("invalid refresh token format");
 
             var refreshTokenTimeOut = _configuration.GetValue<int>("RefreshTokenTimeOut");
+            //todo
+            int userId = int.Parse(User.Claims.Where(c => c.Type == "userid").SingleOrDefault().Value);
+
             var userRefreshToken = await _userService.GetRefreshTokenAsync(refreshToken);
             if (userRefreshToken== null || userRefreshToken.RefreshToken==null) return BadRequest("invalid refresh token");
             if (userRefreshToken.RefreshToken != Guid.Parse(refreshToken.ToString())) return BadRequest("invalid refresh token");
+            if (!userRefreshToken.IsValid) return BadRequest("is invalid refresh token");
+            if (userRefreshToken.CreateDate.AddMinutes(refreshTokenTimeOut) < DateTime.Now) return BadRequest("expire refresh token");
+            */
+
+            if (refreshToken.Length != 36 || refreshToken == null) return BadRequest("invalid refresh token format");
+
+            var refreshTokenTimeOut = _configuration.GetValue<int>("RefreshTokenTimeOut");
+
+            int userId = int.Parse(User.Claims.SingleOrDefault(q => q.Type == "userid").Value);
+            var userRefreshToken = await _userService.GetRefreshTokenAsync(userId);
+            if (userRefreshToken == null) return BadRequest("invalid request");
+            if (userRefreshToken.RefreshToken != Guid.Parse(refreshToken)) return BadRequest("invalid refresh token");
             if (!userRefreshToken.IsValid) return BadRequest("is invalid refresh token");
             if (userRefreshToken.CreateDate.AddMinutes(refreshTokenTimeOut) < DateTime.Now) return BadRequest("expire refresh token");
 

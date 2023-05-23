@@ -1,8 +1,8 @@
 ﻿using Application.Services.Interfaces;
 using Dapper;
+using Microsoft.Data.SqlClient;
 using Domain.Models.User;
 using Domain.ViewModel.User;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
 
