@@ -16,7 +16,13 @@ public class User : BaseEntity<int>
     [Display(Name = "Password")]
     [MaxLength(300, ErrorMessage = ErrorMessages.MaxLengthError)]
     public string? Password { get; set; }
- 
+
+    #endregion
+
+    #region Ralations
+
+    public virtual ICollection<UserRefreshToken> UserRefreshTokens { get; set; }
+
     #endregion
 
 }

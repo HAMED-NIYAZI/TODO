@@ -19,6 +19,7 @@ public class TodoContext : DbContext
 
     #region User
        public DbSet<User> Users { get; set; }
+       public DbSet<UserRefreshToken> UserRefreshTokens { get; set; }
     #endregion
 
   

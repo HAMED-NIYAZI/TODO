@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.EntityFrameworkCore.Internal;
+using IOC.DependencyContainer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,12 +13,23 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+ builder.Services.AddSwaggerGen();
+ 
 
+
+ 
+#region AddDbContext
 builder.Services.AddDbContext<TodoContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("TODODBConnection"));
- });
+});
+#endregion
+
+#region Add Services
+
+builder.Services.RegisterServices();
+#endregion
+
 #region Cors Policy
 builder.Services.AddCors(p => p.AddPolicy("MyCorsPolicy", builder =>
 {
@@ -26,7 +38,7 @@ builder.Services.AddCors(p => p.AddPolicy("MyCorsPolicy", builder =>
 
 #endregion
 
-#region jwt
+#region Add jwt
 
 var secretKey = builder.Configuration.GetValue<string>("TokenKey");
 var tokenTimeOut = builder.Configuration.GetValue<int>("TokenTimeOut");

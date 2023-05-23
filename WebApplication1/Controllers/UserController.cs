@@ -1,8 +1,10 @@
-using Application.Common;
+﻿using Application.Common;
 using Application.Services.Interfaces;
 using Domain.ViewModel.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using System.ComponentModel;
 
 namespace Api.Controllers
 {
@@ -18,13 +20,13 @@ namespace Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Post(UserViewModel model)
+        [SwaggerOperation(Summary = "Write your summary here")]
+        public async Task<IActionResult> Add(CreateUserViewModel model)
         {
             //check validation
-            var saltPassword = Guid.NewGuid();
-            var hashPassword = _encryptionUtility.HashWithSalt(model.Password, saltPassword);
+             var hashPassword = _encryptionUtility.HashSHA256(model.Password);
 
-            var user = new UserViewModel
+            var user = new CreateUserViewModel
             {
                 UserName = model.UserName,
                 Password = hashPassword,

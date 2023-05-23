@@ -15,22 +15,22 @@ namespace Application.Services.Implementations
         {
             _configuration = configuration;
         }
-        public async Task<UserViewModel> GetAsync(int userId)
+        public async Task<UserInfoViewModel> GetAsync(int userId)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("TODODBConnection")))
             {
                 var sql = "Select * From Users Where Id=@userId";
-                var user = await connection.QuerySingleOrDefaultAsync<UserViewModel>(sql, new { userId = userId });
+                var user = await connection.QuerySingleOrDefaultAsync<UserInfoViewModel>(sql, new { userId = userId });
                 return user;
             }
         }
 
-        public async Task<UserViewModel> GetAsync(string userName)
+        public async Task<UserInfoViewModel> GetAsync(string userName)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("TODODBConnection")))
             {
                 var sql = "Select * From Users Where userName=@userName";
-                var user = await connection.QuerySingleOrDefaultAsync<UserViewModel>(sql, new { userName = userName });
+                var user = await connection.QuerySingleOrDefaultAsync<UserInfoViewModel>(sql, new { userName = userName });
                 return user;
             }
         }
@@ -45,12 +45,12 @@ namespace Application.Services.Implementations
             }
         }
 
-        public async Task InsertAsync(UserViewModel model)
+        public async Task InsertAsync(CreateUserViewModel model)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("TODODBConnection")))
             {
-                var sql = @"Insert Users(Id,FirstName,LastName,UserName,Password,PasswordSalt,IsActive) 
-                            VALUES(@Id,@FirstName,@LastName,@UserName,@Password,@PasswordSalt,@IsActive)";
+                var sql = @"Insert Users(UserName,Password,CreateDate,IsDeleted) 
+                            VALUES(@UserName,@Password,getdate(),0)";
                 await connection.ExecuteAsync(sql, model);
             }
         }

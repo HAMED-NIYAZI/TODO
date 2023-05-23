@@ -1,17 +1,22 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Common;
+using Application.Services.Implementations;
+using Application.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IOC.DependencyContainer
 {
     public static class DependencyContainer
     {
-        public static void RegisterServices(IServiceCollection services)
+        public static void RegisterServices( this IServiceCollection services)
         {
             #region Repositories
-            //services.AddScoped<IRepository, Repository>();
+            //  services.AddScoped<IRepository, Repository>();
             #endregion
 
             #region  Services
-            #endregion
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<EncryptionUtility>();
+             #endregion
         }
     }
 }

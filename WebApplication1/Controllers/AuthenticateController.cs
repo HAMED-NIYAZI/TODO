@@ -25,13 +25,13 @@ namespace Api.Controllers
             _encryptionUtility = encryptionUtility;
         }
         [HttpPost]
-        public async Task<IActionResult> Post(UserViewModel model)
+        public async Task<IActionResult> Post(UserLoginViewModel model)
         {
             //1-check username & password
             var user = await _userService.GetAsync(model.UserName);
             if (user == null) return BadRequest("invalid userName");
 
-            var hashPassword = _encryptionUtility.HashWithSalt(model.Password,Guid.NewGuid());
+            var hashPassword = _encryptionUtility.HashSHA256(model.Password);
             if (user.Password != hashPassword) return BadRequest("invalid password");
 
             var token = GenerateNewToken(user.Id);
