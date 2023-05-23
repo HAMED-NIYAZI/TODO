@@ -8,6 +8,7 @@ namespace Application.Services.Interfaces
         Task<UserInfoViewModel> GetAsync(int userId);
         Task<UserInfoViewModel> GetAsync(string userName);
         Task<UserRefreshTokenViewModel> GetRefreshTokenAsync(int userId);
+        Task<UserRefreshTokenViewModel> GetRefreshTokenAsync(string refreshToken);
         Task InsertRefreshTokenAsync(UserRefreshTokenViewModel model);
         Task UpdateRefreshTokenAsync(UserRefreshTokenViewModel model);
     }

@@ -49,8 +49,8 @@ namespace Api.Controllers
             var userToken = new UserRefreshTokenViewModel
             {
                 UserId = user.Id,
-                RefreshToken = refreshToken.ToString(),
-                GenerateDate = DateTime.Now,
+                RefreshToken = Guid.Parse(refreshToken.ToString()),
+                CreateDate = DateTime.Now,
                 IsValid = true
             };
 
@@ -73,27 +73,26 @@ namespace Api.Controllers
         {
             var refreshTokenTimeOut = _configuration.GetValue<int>("RefreshTokenTimeOut");
 
-            int userId = int.Parse(User.Claims.SingleOrDefault(q => q.Type == "userid").Value);
-            var userRefreshToken = await _userService.GetRefreshTokenAsync(userId);
-            if(userRefreshToken == null) return BadRequest("invalid request");
-            if(userRefreshToken.RefreshToken != refreshToken) return BadRequest("invalid refresh token");
-            if(!userRefreshToken.IsValid) return BadRequest("is invalid refresh token");
-            if(userRefreshToken.GenerateDate.AddMinutes(refreshTokenTimeOut) < DateTime.Now) return BadRequest("expire refresh token");
-            
-            var newToken = GenerateNewToken(userId);
+            var userRefreshToken = await _userService.GetRefreshTokenAsync(refreshToken);
+            if (refreshToken == null) return BadRequest("invalid request");
+            if (userRefreshToken.RefreshToken != Guid.Parse(refreshToken.ToString())) return BadRequest("invalid refresh token");
+            if (!userRefreshToken.IsValid) return BadRequest("is invalid refresh token");
+            if (userRefreshToken.CreateDate.AddMinutes(refreshTokenTimeOut) < DateTime.Now) return BadRequest("expire refresh token");
+
+            var newToken = GenerateNewToken(userRefreshToken.UserId);
             var newRefreshToken = Guid.NewGuid();
 
             var userToken = new UserRefreshTokenViewModel
             {
-                UserId = userId,
-                RefreshToken = refreshToken.ToString(),
-                GenerateDate = DateTime.Now,
+                UserId = userRefreshToken.UserId,
+                RefreshToken = newRefreshToken,
+                CreateDate = DateTime.Now,
                 IsValid = true
             };
 
             await _userService.UpdateRefreshTokenAsync(userToken);
 
-            return Ok(new {Token = newToken, RefreshToken = newRefreshToken});
+            return Ok(new { Token = newToken, RefreshToken = newRefreshToken });
 
         }
 
@@ -107,7 +106,7 @@ namespace Api.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim("userGuid", userId.ToString()),
+                    new Claim("userid", userId.ToString()),
                 }),
 
                 Expires = DateTime.UtcNow.AddMinutes(tokenTimeOut),

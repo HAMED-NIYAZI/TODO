@@ -6,8 +6,8 @@ namespace Domain.ViewModel.User;
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public string RefreshToken { get; set; }
-        public DateTime GenerateDate { get; set; }
+        public Guid RefreshToken { get; set; }
+        public DateTime CreateDate { get; set; }
         public bool IsValid { get; set; }
     }
  

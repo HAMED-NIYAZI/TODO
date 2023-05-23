@@ -1,5 +1,6 @@
 ﻿using Application.Services.Interfaces;
 using Dapper;
+using Domain.Models.User;
 using Domain.ViewModel.User;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -39,8 +40,18 @@ namespace Application.Services.Implementations
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("TODODBConnection")))
             {
-                var sql = "Select * From UserTokens Where userId=@userId";
+                var sql = "Select * From UserRefreshTokens Where userId=@userId";
                 var result = await connection.QuerySingleOrDefaultAsync<UserRefreshTokenViewModel>(sql, new { userId = userId });
+                return result;
+            }
+        }
+
+        public async Task<UserRefreshTokenViewModel> GetRefreshTokenAsync(string refreshToken)
+        {
+            using (var connection = new SqlConnection(_configuration.GetConnectionString("TODODBConnection")))
+            {
+                var sql = "Select * From UserRefreshTokens Where RefreshToken=@refreshToken";
+                var result = await connection.QuerySingleOrDefaultAsync<UserRefreshTokenViewModel>(sql, new { RefreshToken = refreshToken });
                 return result;
             }
         }
@@ -59,8 +70,8 @@ namespace Application.Services.Implementations
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("TODODBConnection")))
             {
-                var sql = @"Insert UserTokens(UserId,RefreshToken,GenerateDate,IsValid) 
-                            VALUES(@UserId,@RefreshToken,@GenerateDate,@IsValid)";
+                var sql = @"Insert UserRefreshTokens(UserId,RefreshToken,CreateDate,IsValid) 
+                            VALUES(@UserId,@RefreshToken,@CreateDate,@IsValid)";
                 await connection.ExecuteAsync(sql, model);
             }
         }
@@ -69,8 +80,8 @@ namespace Application.Services.Implementations
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("TODODBConnection")))
             {
-                var sql = @"Update UserTokens set RefreshToken=@RefreshToken,
-                            GenerateDate=@GenerateDate,IsValid = @IsValid
+                var sql = @"Update UserRefreshTokens set RefreshToken=@RefreshToken,
+                            CreateDate=@CreateDate,IsValid = @IsValid
                             WHERE UserId=@UserId";
                 await connection.ExecuteAsync(sql, model);
             }
