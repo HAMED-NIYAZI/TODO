@@ -6,7 +6,7 @@ namespace Domain.ViewModel.User;
         public string FullName { get; set; }
         public string Token { get; set; }
         public string RefreshToken { get; set; }
-        public Guid UserId { get; set; }
+        public int UserId { get; set; }
     
     }
  

@@ -25,13 +25,13 @@ namespace Api.Controllers
             _encryptionUtility = encryptionUtility;
         }
         [HttpPost]
-        public async Task<IActionResult> Post(LoginViewModel model)
+        public async Task<IActionResult> Post(UserViewModel model)
         {
             //1-check username & password
             var user = await _userService.GetAsync(model.UserName);
             if (user == null) return BadRequest("invalid userName");
 
-            var hashPassword = _encryptionUtility.HashWithSalt(model.Password, Guid.Parse(user.PasswordSalt));
+            var hashPassword = _encryptionUtility.HashWithSalt(model.Password,Guid.NewGuid());
             if (user.Password != hashPassword) return BadRequest("invalid password");
 
             var token = GenerateNewToken(user.Id);
@@ -39,7 +39,7 @@ namespace Api.Controllers
 
             var info = new AuthenticateViewModel
             {
-                FullName = $"{user.FirstName} {user.LastName}",
+                FullName = $"{user.UserName}",
                 UserId = user.Id,
                 Token = token,
                 RefreshToken = refreshToken.ToString()
@@ -73,7 +73,7 @@ namespace Api.Controllers
         {
             var refreshTokenTimeOut = _configuration.GetValue<int>("RefreshTokenTimeOut");
 
-            Guid userId = Guid.Parse(User.Claims.SingleOrDefault(q => q.Type == "userGuid").Value);
+            int userId = int.Parse(User.Claims.SingleOrDefault(q => q.Type == "userid").Value);
             var userRefreshToken = await _userService.GetRefreshTokenAsync(userId);
             if(userRefreshToken == null) return BadRequest("invalid request");
             if(userRefreshToken.RefreshToken != refreshToken) return BadRequest("invalid refresh token");
@@ -97,7 +97,7 @@ namespace Api.Controllers
 
         }
 
-        private string GenerateNewToken(Guid userId)
+        private string GenerateNewToken(int userId)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("TokenKey"));

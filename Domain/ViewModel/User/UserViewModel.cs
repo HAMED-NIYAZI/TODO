@@ -1,12 +1,21 @@
+using Domain.Shared;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+
 namespace Domain.ViewModel.User;
-    public class UserViewModel
+public class UserViewModel
     {
-        public Guid Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string PasswordSalt { get; set; }
-        public bool IsActive { get; set; }
-    }
- 
+    #region Properties
+
+    public int Id { get; set; }
+
+    [Display(Name = "UserName")]
+    [MaxLength(32, ErrorMessage = ErrorMessages.MaxLengthError)]
+    public string? UserName { get; set; }
+
+    [Display(Name = "Password")]
+    [MaxLength(300, ErrorMessage = ErrorMessages.MaxLengthError)]
+    public string? Password { get; set; }
+
+    #endregion
+}

@@ -18,7 +18,7 @@ namespace Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Post(UserInfoViewModel model)
+        public async Task<IActionResult> Post(UserViewModel model)
         {
             //check validation
             var saltPassword = Guid.NewGuid();
@@ -26,13 +26,8 @@ namespace Api.Controllers
 
             var user = new UserViewModel
             {
-                Id = Guid.NewGuid(),
-                FirstName = model.FirstName,
-                LastName = model.LastName,
                 UserName = model.UserName,
                 Password = hashPassword,
-                PasswordSalt = saltPassword.ToString(),
-                IsActive = true,
             };
 
             await _userService.InsertAsync(user);

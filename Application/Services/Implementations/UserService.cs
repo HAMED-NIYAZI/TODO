@@ -15,7 +15,7 @@ namespace Application.Services.Implementations
         {
             _configuration = configuration;
         }
-        public async Task<UserViewModel> GetAsync(Guid userId)
+        public async Task<UserViewModel> GetAsync(int userId)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("TODODBConnection")))
             {
@@ -35,7 +35,7 @@ namespace Application.Services.Implementations
             }
         }
 
-        public async Task<UserRefreshTokenViewModel> GetRefreshTokenAsync(Guid userId)
+        public async Task<UserRefreshTokenViewModel> GetRefreshTokenAsync(int userId)
         {
             using (var connection = new SqlConnection(_configuration.GetConnectionString("TODODBConnection")))
             {

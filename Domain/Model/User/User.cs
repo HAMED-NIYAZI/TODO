@@ -11,14 +11,12 @@ public class User : BaseEntity<int>
 
     [Display(Name = "UserName")]
     [MaxLength(32, ErrorMessage = ErrorMessages.MaxLengthError)]
-     public string? Mobile { get; set; }
+     public string? UserName { get; set; }
 
     [Display(Name = "Password")]
     [MaxLength(300, ErrorMessage = ErrorMessages.MaxLengthError)]
     public string? Password { get; set; }
  
     #endregion
-
- 
 
 }
