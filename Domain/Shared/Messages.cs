@@ -1,4 +1,4 @@
-﻿namespace LawyerCoreApp.Domain.Shared
+﻿namespace Domain.Shared
 {
     public static class ErrorMessages
     {

@@ -1,10 +1,10 @@
-﻿using LawyerCoreApp.Domain.Interface;
-using LawyerCoreApp.Domain.Models.User;
-using LawyerCoreApp.Infra.Data.Context;
+﻿using Domain.Interface;
+using Domain.Models.User;
+using Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
-namespace LawyerCoreApp.Infra.Data.Repositories
+namespace Infra.Data.Repositories
 {
     public class UserRepository : GenericRepository<User>, IUserRepository
     {

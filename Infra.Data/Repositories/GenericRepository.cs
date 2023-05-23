@@ -1,9 +1,9 @@
-﻿using LawyerCoreApp.Domain.Interface;
-using LawyerCoreApp.Domain.Models.Common;
-using LawyerCoreApp.Infra.Data.Context;
+﻿using Domain.Interface;
+using Domain.Models.Common;
+using Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace LawyerCoreApp.Infra.Data.Repositories
+namespace Infra.Data.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity<int>
 

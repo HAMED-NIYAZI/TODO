@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
+﻿using Infra.Data.Context;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddDbContext<TodoContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TODODBConnection"));
+ });
 #region Cors Policy
 builder.Services.AddCors(p => p.AddPolicy("MyCorsPolicy", builder =>
 {

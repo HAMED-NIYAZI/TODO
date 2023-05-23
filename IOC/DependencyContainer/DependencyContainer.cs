@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace LawyerCoreApp.IOC.DependencyContainer
+namespace IOC.DependencyContainer
 {
     public static class DependencyContainer
     {

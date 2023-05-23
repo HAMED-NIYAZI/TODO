@@ -1,8 +1,8 @@
-﻿using LawyerCoreApp.Domain.Models.User;
+﻿using Domain.Models.User;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
-namespace LawyerCoreApp.Infra.Data.Context;
+namespace  Infra.Data.Context;
 
 public class TodoContext : DbContext
 {

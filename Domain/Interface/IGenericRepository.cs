@@ -1,6 +1,6 @@
-﻿using LawyerCoreApp.Domain.Models.Common;
+﻿using Domain.Models.Common;
 
-namespace LawyerCoreApp.Domain.Interface
+namespace Domain.Interface
 {
 
     public interface IGenericRepository<T>: IDisposable where T : BaseEntity<int>

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace LawyerCoreApp.Domain.Models.Common;
+namespace Domain.Models.Common;
 
 public class BaseEntity<T>
 {

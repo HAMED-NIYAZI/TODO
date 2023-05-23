@@ -5,7 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
 
-namespace LawyerCoreApp.Application.Services.Implementations
+namespace Application.Services.Implementations
 {
 
     public class UserService : IUserService
