@@ -23,6 +23,7 @@ namespace Api.Controllers
          public async Task<IActionResult> Add(CreateUserViewModel model)
         {
             //check validation
+            if(!ModelState.IsValid) return BadRequest("ModelState invalid");
              var hashPassword = _encryptionUtility.HashSHA256(model.Password);
 
             var user = new CreateUserViewModel

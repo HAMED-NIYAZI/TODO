@@ -55,7 +55,7 @@ namespace Infra.Data.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public   void Update(T entity)
+        public void Update(T entity)
         {
              dbSet.Update(entity);
         }

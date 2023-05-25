@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IOC", "IOC\IOC.csproj", "{6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infra.Data", "Infra.Data\Infra.Data.csproj", "{07919368-2B96-401B-A5E2-8A0C599AEB68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{4C781B1C-3F55-48D7-9334-A5BFF79C417E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{07919368-2B96-401B-A5E2-8A0C599AEB68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07919368-2B96-401B-A5E2-8A0C599AEB68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07919368-2B96-401B-A5E2-8A0C599AEB68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C781B1C-3F55-48D7-9334-A5BFF79C417E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C781B1C-3F55-48D7-9334-A5BFF79C417E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C781B1C-3F55-48D7-9334-A5BFF79C417E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C781B1C-3F55-48D7-9334-A5BFF79C417E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

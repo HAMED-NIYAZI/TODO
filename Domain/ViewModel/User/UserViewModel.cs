@@ -15,6 +15,7 @@ public class CreateUserViewModel
 
     [Display(Name = "Password")]
     [MaxLength(300, ErrorMessage = ErrorMessages.MaxLengthError)]
+    [MinLength(3, ErrorMessage = ErrorMessages.MinLengthError)]
     public string? Password { get; set; }
 
     #endregion
