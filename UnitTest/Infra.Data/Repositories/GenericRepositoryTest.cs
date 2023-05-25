@@ -26,7 +26,7 @@ namespace UnitTest.Infra.Data.Repositories
             GenericRepository<User> repo = new GenericRepository<User>(_context);
 
             //Act
-            var res = Task.FromResult(repo.Remove(21));
+            var res = Task.FromResult(repo.Add());
 
             //Assert
             Assert.IsType<Task<Task>?>(res);
